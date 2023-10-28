@@ -138,8 +138,7 @@ With knowledge in JQuery, we will load objects from the client side using our ow
 *	Ebube Gideon - [@holbertonschool.com](mailto:onwutaebubegideon1555@gmail.com)
 *	Edwin Aikins - [@holbertonschool.com](mailto:arkoaikins@gmail.com)
 *	Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
-Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
-<br/>
-Onwuta Ebube Gideon - [Github](https://github.com/ebuube) / [Twitter](https://twitter.com/EbubeStar)
+*	Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+*	Onwuta Ebube Gideon - [Github](https://github.com/ebuube) / [Twitter](https://twitter.com/EbubeStar)
 
 
