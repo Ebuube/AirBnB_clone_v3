@@ -30,7 +30,22 @@ def not_found(error):
     """
     Handle 'NOT FOUND' error = 404
     """
-    return make_response(jsonify({"error": "Not found"}), 404)
+    response = make_response(jsonify({"error": "Not found"}))
+    response.status_code = 404
+    return response
+
+
+'''
+@app.errorhandler(400)
+def creation_error(error):
+    """
+    Handle errors generated while trying to create objects => 400
+    """
+    print("Creation error activated")
+    response = make_response(jsonify({"error": error}))
+    response.status_code = 400
+    return response
+'''
 
 
 if __name__ == "__main__":
