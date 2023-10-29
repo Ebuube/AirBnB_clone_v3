@@ -70,6 +70,13 @@ test_file_storage.py'])
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
+
+    def setUp(self):
+        """Rotuine before a test is run"""
+        path = 'file.json'
+        if os.path.exists(path):
+            os.remove('file.json')
+
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_all_returns_dict(self):
         """Test that all returns the FileStorage.__objects attr"""
@@ -113,3 +120,60 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """Test that we can retrieve an object by id and class"""
+        storage = FileStorage()
+        new = BaseModel(name='John')
+        new.save()
+
+        self.assertEqual(storage.get(BaseModel, new.id), new)
+
+        # object not found should return None
+        another = BaseModel(name="Doe")
+        self.assertEqual(storage.get(BaseModel, another.id), None)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        """Test that we can count objects not based on class"""
+        storage = FileStorage()
+        storage.reload()
+
+        # Delete objects
+        keys = [key for key in storage.all().keys()]
+        for key in keys:
+            obj = storage.all()[key]
+            obj.delete()
+
+        # No objects yet
+        for item in storage.all().values():
+            print()
+            print(item)
+            print()
+        self.assertEqual(storage.count(), 0)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count_class(self):
+        """Test that we can count objects based on class"""
+        # 2 State objects
+        storage = FileStorage()
+        storage.reload()
+
+        # Delete objects
+        keys = [key for key in storage.all().keys()]
+        for key in keys:
+            obj = storage.all()[key]
+            obj.delete()
+
+        for cls in classes.values():
+            with self.subTest(cls=cls):
+                obj1 = cls(name="Buff")
+                obj1.save()
+                obj2 = cls(name="Luff")
+                obj2.save()
+                self.assertEqual(storage.count(cls), 2)
+
+        # Total number of objects
+        total = 2 * len(classes)
+        self.assertEqual(storage.count(), total)
