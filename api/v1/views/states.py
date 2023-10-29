@@ -77,3 +77,31 @@ def create_state():
     response = make_response(jsonify(new.to_dict()))
     response.status_code = 201
     return response
+
+
+@app_views.route('/states/<state_id>', methods=['PUT'],
+                 strict_slashes=False)
+def update_state(state_id):
+    """
+    Update a State object
+    """
+    state = storage.get(State, state_id)
+    if state is None:
+        abort(404)
+
+    if type(request.get_json()) not in (str, dict):
+        response = make_response(jsonify({'error': 'Not a JSON'}))
+        response.status_code = 400
+        abort(response)
+
+    # update
+    ignore_keys = ['id', 'created_at', 'updated_at']
+    for key, val in request.get_json().items():
+        if key not in ignore_keys:
+            setattr(state, key, val)
+    state.save()
+
+    # craft response
+    response = make_response(jsonify(state.to_dict()))
+    response.status_code = 200
+    return response
