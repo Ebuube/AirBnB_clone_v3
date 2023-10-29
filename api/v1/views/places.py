@@ -87,7 +87,7 @@ def create_place(city_id):
         if user is None:
             abort(404)
 
-    required_attrs = ['user_id', 'city_id', 'name']
+    required_attrs = ['user_id', 'name']
     for attr in required_attrs:
         if attr not in request.get_json():
             msg = "Missing {}".format(attr)
@@ -95,23 +95,12 @@ def create_place(city_id):
             response.status_code = 400
             abort(response)
 
-    new = Place()
-    # defaults
-    allowed_attrs = {
-                "description": "",
-                "number_rooms": 0,
-                "number_bathrooms": 0,
-                "max_guest": 0,
-                "price_by_night": 0,
-                "latitude": 0.0,
-                "longitude": 0.0
-    }
-    for attr, val in allowed_attrs.items():
-        setattr(new, attr, val)
+    new = Place(city_id=city_id)
 
     # Requested
     for attr in request.get_json():
-        if attr in allowed_attrs or attr in required_attrs:
+        # if attr in allowed_attrs or attr in required_attrs:
+        if attr in required_attrs:
             setattr(new, attr, request.get_json().get(attr))
     new.save()
 
