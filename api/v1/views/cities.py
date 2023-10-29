@@ -88,7 +88,6 @@ def create_city(state_id):
     return response
 
 
-'''
 @app_views.route('/cities/<city_id>', methods=['PUT'],
                  strict_slashes=False)
 def update_city(city_id):
@@ -105,7 +104,7 @@ def update_city(city_id):
         abort(response)
 
     # update
-    ignore_keys = ['id', 'created_at', 'updated_at']
+    ignore_keys = ['id', 'state_id', 'created_at', 'updated_at']
     for key, val in request.get_json().items():
         if key not in ignore_keys:
             setattr(city, key, val)
@@ -115,4 +114,3 @@ def update_city(city_id):
     response = make_response(jsonify(city.to_dict()))
     response.status_code = 200
     return response
-'''
