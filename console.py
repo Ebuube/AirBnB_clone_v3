@@ -160,5 +160,43 @@ class HBNBCommand(cmd.Cmd):
         else:
             print("** class doesn't exist **")
 
+    # AUTO-COMPLETION
+
+    def complete_create(self, text, line, begidx, endix):
+        """
+        Auto-completion for the 'create' command
+        """
+        return [completion for completion in classes
+                if completion.startswith(text)]
+
+    def complete_show(self, text, line, begidx, endix):
+        """
+        Auto-completion for the 'show' command
+        """
+        return [completion for completion in classes
+                if completion.startswith(text)]
+
+    def complete_destroy(self, text, line, begidx, endix):
+        """
+        Auto-completion for the 'destroy' command
+        """
+        return [completion for completion in classes
+                if completion.startswith(text)]
+
+    def complete_all(self, text, line, begidx, endix):
+        """
+        Auto-completion for the 'all' command
+        """
+        return [completion for completion in classes
+                if completion.startswith(text)]
+
+    def complete_update(self, text, line, begidx, endix):
+        """
+        Auto-completion for the 'update' command
+        """
+        return [completion for completion in classes
+                if completion.startswith(text)]
+
+
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
