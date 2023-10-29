@@ -11,6 +11,7 @@ from models.city import City
 from models.review import Review
 from models.state import State
 from models.user import User
+from flask import make_response
 
 classes = [Amenity, Place, City, Review, State, User]
 
@@ -22,7 +23,7 @@ def api_status():
     """
     status = {"status": "OK"}
 
-    return jsonify(status)
+    return make_response(jsonify(status))
 
 
 @app_views.route('/stats', methods=['GET'], strict_slashes=False)
@@ -34,4 +35,4 @@ def api_stats():
     for cls in classes:
         stats[cls.__tablename__] = storage.count(cls)
 
-    return jsonify(stats)
+    return make_response(jsonify(stats))
